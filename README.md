@@ -110,6 +110,16 @@ Copy
 Edit
 python manage.py runserver
 
+- 6. Seed random data to DB
+```bash
+python manage.py seed_data
+
+---
+
+## Get into Admin panel (super user)
+name : mithun
+password: mithun
+
 ---
 
 ## API Endpoints
