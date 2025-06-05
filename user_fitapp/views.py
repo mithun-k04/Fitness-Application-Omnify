@@ -9,10 +9,14 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import IntegrityError
 from rest_framework.exceptions import ValidationError
 <<<<<<< HEAD
+<<<<<<< HEAD
 from datetime import datetime
 =======
 
 >>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
+=======
+from datetime import datetime
+>>>>>>> 1083de0d3210f58a88096efcd5d87743487f66c7
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -26,6 +30,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
+EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 <<<<<<< HEAD
 EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -47,11 +52,20 @@ class BookSlotView(APIView):
 class BookSlotView(APIView):
     def post(self, request):
         try:
-            fitness_class_id = request.data.get('fitness_class_id')
+            fitness_class_id = request.data.get('class_id')
             client_name = request.data.get('client_name')
             client_email = request.data.get('client_email')
             client_phone = request.data.get('client_phone')
+<<<<<<< HEAD
 >>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
+=======
+            
+            if not re.match(EMAIL_REGEX, client_email):
+                    return Response({'error': 'Invalid email format'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            if len(client_phone)<10:
+                    return Response({'error': 'Invalid phone number'}, status=status.HTTP_400_BAD_REQUEST)
+>>>>>>> 1083de0d3210f58a88096efcd5d87743487f66c7
 
             if not all([fitness_class_id, client_name, client_email, client_phone]):
                 return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -85,6 +99,9 @@ class AvailableClasses(APIView):
             available_classes = FitnessClass.objects.filter(available_slots__gt=0)
             serializer = FitnessClassSerializer(available_classes, many=True)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1083de0d3210f58a88096efcd5d87743487f66c7
             data = serializer.data
 
             for item in data:
@@ -97,9 +114,12 @@ class AvailableClasses(APIView):
                         pass  
 
             return Response(data, status=status.HTTP_200_OK)
+<<<<<<< HEAD
 =======
             return Response(serializer.data, status=status.HTTP_200_OK)
 >>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
+=======
+>>>>>>> 1083de0d3210f58a88096efcd5d87743487f66c7
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -117,6 +137,7 @@ class GetSpecificBooking(APIView):
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # User Modules
 =======
 
@@ -129,6 +150,9 @@ EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 
 >>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
+=======
+# User Modules
+>>>>>>> 1083de0d3210f58a88096efcd5d87743487f66c7
 class RegisterUserView(APIView):
     def post(self, request):
         try:

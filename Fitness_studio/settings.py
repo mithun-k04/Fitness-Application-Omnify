@@ -40,11 +40,16 @@ INSTALLED_APPS = [
     "rest_framework",
     "user_fitapp",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "corsheaders",
     'django_seed',
 =======
     "corsheaders"
 >>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
+=======
+    "corsheaders",
+    'django_seed',
+>>>>>>> 1083de0d3210f58a88096efcd5d87743487f66c7
 ]
 
 MIDDLEWARE = [
