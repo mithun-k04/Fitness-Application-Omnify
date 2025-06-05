@@ -128,7 +128,7 @@ Method	         Endpoint	                   Description
 - POST	   /api/slotbooking/	           Book a slot in a class
 - sample data for slot booking to check in postman
 {
-"class_id" : id of the class,
+"class_id" : 29,
 "client_name" : "mithun",
 "client_email" : "mithun@gmail.com",
 "client_phone" : "9342622457"
