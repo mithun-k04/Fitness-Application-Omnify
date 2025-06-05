@@ -39,8 +39,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "user_fitapp",
+<<<<<<< HEAD
     "corsheaders",
     'django_seed',
+=======
+    "corsheaders"
+>>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
 ]
 
 MIDDLEWARE = [

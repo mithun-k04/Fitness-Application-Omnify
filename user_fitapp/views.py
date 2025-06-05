@@ -8,7 +8,11 @@ import re
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import IntegrityError
 from rest_framework.exceptions import ValidationError
+<<<<<<< HEAD
 from datetime import datetime
+=======
+
+>>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -23,6 +27,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
 
 
+<<<<<<< HEAD
 EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 class BookSlotView(APIView):
@@ -38,6 +43,15 @@ class BookSlotView(APIView):
             
             if len(client_phone)<10:
                     return Response({'error': 'Invalid phone number'}, status=status.HTTP_400_BAD_REQUEST)
+=======
+class BookSlotView(APIView):
+    def post(self, request):
+        try:
+            fitness_class_id = request.data.get('fitness_class_id')
+            client_name = request.data.get('client_name')
+            client_email = request.data.get('client_email')
+            client_phone = request.data.get('client_phone')
+>>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
 
             if not all([fitness_class_id, client_name, client_email, client_phone]):
                 return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -70,6 +84,7 @@ class AvailableClasses(APIView):
         try:
             available_classes = FitnessClass.objects.filter(available_slots__gt=0)
             serializer = FitnessClassSerializer(available_classes, many=True)
+<<<<<<< HEAD
             data = serializer.data
 
             for item in data:
@@ -82,6 +97,9 @@ class AvailableClasses(APIView):
                         pass  
 
             return Response(data, status=status.HTTP_200_OK)
+=======
+            return Response(serializer.data, status=status.HTTP_200_OK)
+>>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -98,7 +116,19 @@ class GetSpecificBooking(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+<<<<<<< HEAD
 # User Modules
+=======
+
+
+
+
+
+# User Modules
+EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+
+>>>>>>> 7a4a19b16de89844c228c50afcb87177a2812f06
 class RegisterUserView(APIView):
     def post(self, request):
         try:
