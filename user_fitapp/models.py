@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import timedelta
 
 class FitnessClass(models.Model):  
     name = models.CharField(max_length=100)
