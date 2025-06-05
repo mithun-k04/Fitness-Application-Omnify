@@ -8,7 +8,7 @@ import re
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import IntegrityError
 from rest_framework.exceptions import ValidationError
-
+from datetime import datetime
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -22,14 +22,21 @@ class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
 
+EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 class BookSlotView(APIView):
     def post(self, request):
         try:
-            fitness_class_id = request.data.get('fitness_class_id')
+            fitness_class_id = request.data.get('class_id')
             client_name = request.data.get('client_name')
             client_email = request.data.get('client_email')
             client_phone = request.data.get('client_phone')
+            
+            if not re.match(EMAIL_REGEX, client_email):
+                    return Response({'error': 'Invalid email format'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            if len(client_phone)<10:
+                    return Response({'error': 'Invalid phone number'}, status=status.HTTP_400_BAD_REQUEST)
 
             if not all([fitness_class_id, client_name, client_email, client_phone]):
                 return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -62,7 +69,18 @@ class AvailableClasses(APIView):
         try:
             available_classes = FitnessClass.objects.filter(available_slots__gt=0)
             serializer = FitnessClassSerializer(available_classes, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            data = serializer.data
+
+            for item in data:
+                try:
+                    item['date_time'] = datetime.strptime(item['date_time'], '%Y-%m-%dT%H:%M:%S%z').date().isoformat()
+                except ValueError:
+                    try:
+                        item['date_time'] = datetime.strptime(item['date_time'], '%Y-%m-%dT%H:%M:%S.%f%z').date().isoformat()
+                    except Exception:
+                        pass  
+
+            return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -79,15 +97,7 @@ class GetSpecificBooking(APIView):
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-
-
-
-
 # User Modules
-EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-
-
 class RegisterUserView(APIView):
     def post(self, request):
         try:
