@@ -116,7 +116,17 @@ python manage.py runserver
 Method	Endpoint	Description
 - GET	/api/availableclasses/	Fetch classes with available slots
 - POST	/api/slotbooking/	Book a slot in a class
-- GET	/api/bookings/<user_email>/	Get all bookings for a user
+
+- sample data for slot booking to check in postman
+{
+"class_id" : id of the class,
+"client_name" : "mithun",
+"client_email" : "mithun@gmail.com",
+"client_phone" : "9342622457"
+}
+
+- GET	/api/bookings/<user_email>/	Get all bookings for a user, use correct email id that should be used for booking
+
 - POST	/api/userregistration/	Register a new user
 - POST	/api/userlogin/	Login and receive JWT token
 - CRUD	/api/users/	Manage users (admin/dev use)
